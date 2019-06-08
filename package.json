@@ -1,0 +1,29 @@
+{
+  "name": "mds",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "vieiraricardo <hi@ricvieira.com>",
+  "license": "MIT",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "bluebird": "^3.5.5",
+    "fast-xml-parser": "^3.12.13",
+    "node-fetch": "^2.3.0",
+    "socket.io": "^2.2.0",
+    "transmission": "^0.4.9",
+    "upnpserver": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "repository": {
+    "url": "vieiraricardo/mds"
+  }
+}

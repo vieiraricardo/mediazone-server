@@ -1,10 +1,10 @@
 {
-  "name": "mds",
+  "name": "mediazone-server",
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js"
   },
-  "author": "vieiraricardo <hi@ricvieira.com>",
+  "author": "Ricardo Vieira",
   "license": "MIT",
   "dependencies": {
     "await-to-js": "^2.1.1",
@@ -24,6 +24,14 @@
     "eslint-plugin-standard": "^4.0.0"
   },
   "repository": {
-    "url": "vieiraricardo/mds"
-  }
+    "type": "git",
+    "url": "git@github.com:vieiraricardo/mediazone-server.git"
+  },
+  "keywords": [
+    "Node.js",
+    "upnp",
+    "torrent",
+    "movies",
+    "tvshows"
+  ]
 }

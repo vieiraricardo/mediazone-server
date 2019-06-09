@@ -1,4 +1,5 @@
 const http = require('http').createServer()
+const { promisify } = require('util')
 const server = require('socket.io')(http, { serveClient: false })
 const to = require('await-to-js').to
 const Server = require('upnpserver')
@@ -30,9 +31,17 @@ function emitDownloadInfo () {
   }, 5000)
 }
 
-// function isTransmissionDaemonOn () {
+async function startDaemon () {
+  const exec = promisify(require('child_process').exec)
+  const command = 'sudo service transmission-daemon start'
+  const { stderr } = await exec(command)
 
-// }
+  console.log('Starting daemon...')
+
+  if (stderr) return console.log(stderr)
+
+  console.log('The daemon started successfully.')
+}
 
 server.on('connection', socket => {
   if (server.engine.clientsCount === 1 && !isActiveInterval) emitDownloadInfo()
@@ -58,13 +67,15 @@ server.on('connection', socket => {
   socket.on('start-torrent', startTorrent)
 })
 
-const UPNPServer = new Server({ name: 'MovieZone' }, [
+const UPNPServer = new Server({ name: 'MediaZone' }, [
   {
     path: DOWNLOAD_DIR,
     mountPath: '/TV Shows',
     type: 'directory'
   }
 ])
+
+startDaemon()
 
 UPNPServer.start()
 

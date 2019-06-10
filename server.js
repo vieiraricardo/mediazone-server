@@ -70,7 +70,7 @@ server.on('connection', socket => {
 const UPNPServer = new Server({ name: 'MediaZone' }, [
   {
     path: DOWNLOAD_DIR,
-    mountPath: '/TV Shows',
+    mountPath: '/My Videos',
     type: 'directory'
   }
 ])

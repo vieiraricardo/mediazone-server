@@ -129,6 +129,7 @@ function install() {
   kill $!
 
   mkdir "mz"
+  sudo chown debian-transmission:pi mz
   
   enable_service
 }

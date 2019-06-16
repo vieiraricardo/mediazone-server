@@ -70,6 +70,8 @@ function create_service() {
 
     Environment=PORT=8080
 
+    User=pi
+
     [Install]
     WantedBy=multi-user.target
   " | sed -e 's/^[ \t]*//' > mediazone.service
@@ -125,6 +127,8 @@ function install() {
   on_done_msg "instalation completed"
 
   kill $!
+
+  mkdir "mz"
   
   enable_service
 }

@@ -33,7 +33,7 @@ function install_torrent_client () {
   command -v transmission-daemon &> /dev/null
 
   if [ $? -eq 0 ]; then
-    echo "  \e[1;32m✔\e[0m torrent client installed"
+    echo -e "  \e[1;32m✔\e[0m torrent client installed"
     sleep 2
   else
     while true;do spinner 'Installing transmission-daemon'; done & trap 'kill $!' SIGTERM SIGKILL
@@ -70,7 +70,7 @@ function create_service() {
 
     Environment=PORT=8080
 
-    User=pi
+    User=$USER
 
     [Install]
     WantedBy=multi-user.target
@@ -128,11 +128,11 @@ function install() {
 
   kill $!
 
-  mkdir "mz"
-  sudo chown debian-transmission:pi mz
+  mkdir "$HOME/mz"
+  sudo chown debian-transmission:$USER "$HOME/mz"
+  sudo chmod g+wrx $HOME/mz
   
   enable_service
 }
 
 install
-

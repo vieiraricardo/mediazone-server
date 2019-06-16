@@ -8,7 +8,11 @@ Mediazone is developed for linux, especially to be used with RaspberryPi, but yo
 
 ## Installing
 
-Enter the command below into your terminal to quickly install the server:
+Start by updating the package lists:
+```bash
+sudo apt-get update
+```
+and run this command to install:
 ```bash
 wget -q https://github.com/vieiraricardo/mediazone-server/raw/master/install.sh && sudo chmod +x install.sh && ./install.sh
 ```

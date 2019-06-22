@@ -117,7 +117,7 @@ function download_repo() {
 }
 
 function transmissiond_config() {
-  CONFIG_FILE="/var/lib/transmission-daemon/.config/transmission-daemon/settings.json"
+  CONFIG_FILE="/var/lib/transmission-daemon/info/settings.json"
 
   echo -e "\e[1;37mSET AUTH CONFIG:\e[0m"
 

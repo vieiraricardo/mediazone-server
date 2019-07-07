@@ -53,7 +53,9 @@ function create_service() {
   echo -e "
     [Unit]
     Description=A UPNP server with automatic torrent downloads
-
+    Wants=network-online.target
+    After=network-online.target
+    
     [Service]
     ExecStart=$nodepath /opt/mediazone/server.js
 

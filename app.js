@@ -116,6 +116,3 @@ module.exports = {
   stopTorrent,
   getRSSFeed
 }
-
-// give permission to debian-transmission user write and delete files on Downloads folder
-// sudo chgrp debian-transmission $HOME/Downloads

@@ -1,10 +1,10 @@
 # MediaZone Server
 
-> Mediazone Server is a lightweight UPNP server that downloads your favorite movies and series through torrents. It can be managed by an android app or a tizen app for samsung smart tvs. (All Plex power with automatic downloads).
+> MediaZone Server is a lightweight UPNP server that downloads your favorite movies and series through torrents. It can be managed by an android app.
 
 ## Note
 
-Mediazone is developed for linux, especially to be used with RaspberryPi, but you can run on any linux machine.
+MediaZone is developed for linux, especially to be used with RaspberryPi, but you can run on any linux machine.
 
 ## Installing
 

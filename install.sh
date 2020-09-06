@@ -26,7 +26,7 @@ function spinner() {
 }
 
 function on_done_msg {
-  echo -e "\r\033[K  \e[1;32m✔\e[0m $1" 
+  echo -e "\r\033[K  \e[1;32m✔\e[0m $1"
 }
 
 function install_torrent_client () {
@@ -55,7 +55,7 @@ function create_service() {
     Description=A UPNP server with automatic torrent downloads
     Wants=network-online.target
     After=network-online.target
-    
+
     [Service]
     ExecStart=$nodepath /opt/mediazone/server.js
 
@@ -106,9 +106,9 @@ function download_repo() {
   while true;do spinner 'Download mediazone repository'; done & trap 'kill $!' SIGTERM SIGKILL
   wget -qO - https://github.com/vieiraricardo/mediazone-server/tarball/master | tar xz
 
-  if [[ $? -eq 1 ]]; then 
-    echo -e >&2 "\r\033[K  \e[1;37m  error downloading repository, RUN THE SCRIPT AGAIN\e[0m" 
-    kill $! 
+  if [[ $? -eq 1 ]]; then
+    echo -e >&2 "\r\033[K  \e[1;37m  error downloading repository, RUN THE SCRIPT AGAIN\e[0m"
+    kill $!
     exit 1
   fi
 
@@ -139,9 +139,9 @@ function transmissiond_config() {
 
   sudo sed -i -e '/rpc-host-whitelist-enabled/c\    "rpc-host-whitelist-enabled\": false,' $CONFIG_FILE
 
-  sudo sed -i -e '/download-dir/c\    "download-dir\": \"/home/pi/mz\",' $CONFIG_FILE
+  sudo sed -i -e '/download-dir/c\    "download-dir\": \"'"$HOME/mz-downloads"'\",' $CONFIG_FILE
 
-  sudo service mediazone start &> /dev/null  
+  sudo service mediazone start &> /dev/null
 
   echo -e "\r\033[K\e[1;32mALL DONE!!\e[0m"
 
@@ -151,7 +151,7 @@ function transmissiond_config() {
 function install() {
   install_torrent_client
   install_service
-  
+
   download_repo
   downloaded_folder="$(ls | awk '{for(i=1;i<=NR;i++){if(match($i, "mediazone")){print $i}}}' 2> /dev/null)"
 
@@ -165,9 +165,9 @@ function install() {
 
   kill $!
 
-  mkdir "$HOME/mz"
-  sudo chown debian-transmission:$USER "$HOME/mz"
-  sudo chmod g+wrx $HOME/mz
+  mkdir "$HOME/mz-downloads"
+  sudo chown debian-transmission:$USER "$HOME/mz-downloads"
+  sudo chmod g+wrx $HOME/mz-downloads
 
   enable_service
   transmissiond_config

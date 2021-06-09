@@ -1,31 +1,33 @@
-const fetch = require('node-fetch');
-const parser = require('fast-xml-parser');
-const { DOWNLOAD_DIR } = require('./util');
-const bluebird = require('bluebird');
-const Transmission = require('transmission');
+import fetch from "node-fetch";
+import parser from "fast-xml-parser";
+import bluebird from "bluebird";
+import Transmission from "transmission";
+
+import { DOWNLOAD_DIR } from "./utils";
+
 const transmission = new Transmission({
   port: 9091,
-  username: 'transmission',
-  password: 'transmission',
-  'download-dir': DOWNLOAD_DIR,
+  username: "transmission",
+  password: "transmission",
+  "download-dir": DOWNLOAD_DIR,
 });
 
 bluebird.promisifyAll(transmission);
 
-async function addTorrent(url) {
+export async function addTorrent(url) {
   await transmission.addUrl(url, (err) => {
     if (err) return console.log(err);
   });
 }
 
-function deleteTorrent(id) {
+export function deleteTorrent(id) {
   transmission.remove(id, true, (err, result) => {
     if (err) return console.log(err);
     console.log(result);
   });
 }
 
-async function getAllTorrents() {
+export async function getAllTorrents() {
   const torrents = await transmission.getAsync().then((result) =>
     result.torrents.map((torrent) => ({
       id: torrent.id,
@@ -40,31 +42,31 @@ async function getAllTorrents() {
   return torrents;
 }
 
-function startAllTorrents() {
+export function startAllTorrents() {
   getActiveTorrents().then((torrents) =>
     torrents.forEach((torrent) => startTorrent(torrent.id)),
   );
 }
 
-function stopAllTorrents() {
+export function stopAllTorrents() {
   getActiveTorrents().then((torrents) =>
     torrents.forEach((torrent) => stopTorrent(torrent.id)),
   );
 }
 
-function startTorrent(id) {
+export function startTorrent(id) {
   transmission.start(id, (err) => {
     if (err) return console.log(err);
   });
 }
 
-function stopTorrent(id) {
+export function stopTorrent(id) {
   transmission.stop(id, (err) => {
     if (err) return console.log(err);
   });
 }
 
-async function getActiveTorrents() {
+export async function getActiveTorrents() {
   const torrents = await transmission.activeAsync().then((result) =>
     result.torrents.map((torrent) => ({
       name: torrent.name,
@@ -76,26 +78,26 @@ async function getActiveTorrents() {
 
 function getStatusType(type) {
   if (type === 0) {
-    return 'STOPPED';
+    return "STOPPED";
   } else if (type === 1) {
-    return 'CHECK_WAIT';
+    return "CHECK_WAIT";
   } else if (type === 2) {
-    return 'CHECK';
+    return "CHECK";
   } else if (type === 3) {
-    return 'DOWNLOAD_WAIT';
+    return "DOWNLOAD_WAIT";
   } else if (type === 4) {
-    return 'DOWNLOAD';
+    return "DOWNLOAD";
   } else if (type === 5) {
-    return 'SEED_WAIT';
+    return "SEED_WAIT";
   } else if (type === 6) {
-    return 'SEED';
+    return "SEED";
   } else if (type === 7) {
-    return 'ISOLATED';
+    return "ISOLATED";
   }
 }
 
-const getRSSFeed = async () => {
-  const xml = await fetch('https://eztv.io/ezrss.xml')
+export const getRSSFeed = async () => {
+  const xml = await fetch("https://eztv.re/ezrss.xml")
     .then((res) => res.text())
     .then((xml) =>
       parser.parse(xml, { ignoreNameSpace: true, trimValues: true }),
@@ -107,15 +109,4 @@ const getRSSFeed = async () => {
   }));
 
   return feed;
-};
-
-module.exports = {
-  addTorrent,
-  getAllTorrents,
-  deleteTorrent,
-  startAllTorrents,
-  stopAllTorrents,
-  startTorrent,
-  stopTorrent,
-  getRSSFeed,
 };
